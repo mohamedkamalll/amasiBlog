@@ -64,5 +64,6 @@ Each directory and file serves a specific purpose:
   - **`config.php`**: Stores database connection settings.
   - **`createDatabase.php`**: Automatically creates the database if it doesn't exist and creates the database connection.
   - **`db_setup.php`**: Sets up the required tables.
-- **`index.php`**: The main entry point of the application.
+- **`DB Schema/`**: Contains the database schema.
+-  **`index.php`**: The main entry point of the application.
 - **`README.md`**: Documentation for the project.
