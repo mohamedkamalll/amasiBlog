@@ -1,38 +1,14 @@
-<?php
-     include './config/createDatabase.php'; // This ensures $conn is available
-
-     $sql = "SELECT * FROM posts";
-     $result = $conn->query($sql);
-     //we will do the following code to create a local store for posts to use it to update the added or deleted posts instead of calling database everytime we added new post to get the updated posts
-     $posts = []; // Initialize empty array
-
-     if ($result->num_rows > 0) {
-          while ($row = $result->fetch_assoc()) {
-               $posts[] = $row; // Store each post as an object in array
-          }
-     }
-
-     $conn->close();
-     
-?>
-
 <!DOCTYPE html>
 <html>
      <head>
           <title>Simple Blog</title>
           <link rel="stylesheet" href="./assets/css/main.css">
-
-          <script>
-               // Convert PHP array to JavaScript and reversing it 
-               let posts = <?php echo json_encode($posts); ?>;
-               posts.reverse();
-          </script>
      </head>
      <body>
           <div class="header-container">
                <div class="site-title">Simple Blog System</div>
                <div class="nav">
-                    <a href="index.php">Home</a>
+                    <a onclick="displayPosts()">Home</a>
                     <a onclick="showAddPostForm()">Add Post</a>
                     <a onclick="showSearchForm()">Search</a>
                </div>
@@ -47,7 +23,7 @@
                     <input type="text" id="post-title" placeholder="Enter title" required>
                     <textarea id="post-content" placeholder="Enter content" required></textarea>
                     <div class="centered-buttons">
-                         <button onclick="addPost()">Submit</button>
+                         <button onclick="handleAddPost()">Submit</button>
                          <button onclick="hideAddPostForm()">Cancel</button>
                     </div>
                </div>
@@ -64,6 +40,7 @@
 
                <div id="post-list"></div>
                <script src="./assets/js/ui.js"></script> <!-- javascript show and hide add and edit forms -->
+               <script src="./assets/js/api.js"></script> <!-- all api methods -->
                <script src="./assets/js/script.js"></script>
           </div>
      </body>

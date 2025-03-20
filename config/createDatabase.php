@@ -9,8 +9,6 @@
 
           $message = "Database already exists";
           header("X-Debug-Message: $message");
-          
-         // echo "<script>console.log('Database already exists');</script>";
           $sql = "USE $database";
           $conn->query($sql);
 
