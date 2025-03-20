@@ -47,14 +47,22 @@ cd amasiBlog
 ```
 Each directory and file serves a specific purpose:
 
-- **`api/`**: Backend API scripts for CRUD operations.
-- **`assets/css/styles.css`**: Stylesheet for UI design.
+
+### Explanation of Key Files:
+
+- **`api/`**: Contains backend PHP scripts for handling CRUD operations.
+  - **`add_post.php`**: Handles adding new posts to the database.
+  - **`delete_post.php`**: Handles deleting posts.
+  - **`edit_post.php`**: Handles editing posts.
+  - **`fetch_posts.php`**: Retrieves all posts from the database.
+- **`assets/css/styles.css`**: Contains styles for the frontend.
 - **`assets/js/`**:
-  - `ui.js`: Manages view and hide functions for add and search forms.
-  - `api.js`: Handles API calls and responses.
+  - **`scripts.js`**: Handles general frontend logic.
+  - **`ui.js`**: Manages view and hide functions for forms.
+  - **`api.js`**: Handles API requests and responses.
 - **`config/`**:
-  - `config.php`: Database configuration settings.
-  - `createDatabase.php`: Creates the database if it doesn’t exist.
-  - `db_setup.php`: Sets up required tables.
-- **`index.php`**: Main entry point of the blog.
-- **`README.md`**: Project documentation.
+  - **`config.php`**: Stores database connection settings.
+  - **`createDatabase.php`**: Automatically creates the database if it doesn't exist and creates the database connection.
+  - **`db_setup.php`**: Sets up the required tables.
+- **`index.php`**: The main entry point of the application.
+- **`README.md`**: Documentation for the project.
