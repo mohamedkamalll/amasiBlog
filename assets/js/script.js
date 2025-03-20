@@ -29,7 +29,7 @@ function displayPosts(id) {
                <hr>
                <br>
                <button class="edit-btn">Edit</button>
-               <button class="delete-btn" >Delete</button>
+               <button onclick = "deletePost(${post.id})">Delete</button>
                <hr>`;          
                postList.appendChild(postDiv);
           });  
@@ -50,7 +50,7 @@ function displayPosts(id) {
                <hr>
                <br>
                <button class="edit-btn" >Edit</button>
-               <button class="delete-btn">Delete</button>
+               <button class="delete-btn" >Delete</button>
                <hr>`;          
                postList.appendChild(postDiv);
           }else{
@@ -100,5 +100,29 @@ function addPost() {
      })
      .catch(error => console.error("Fetch error:", error));
 }
+
+
+function deletePost(postId) {
+     // Send the id to PHP 
+    console.log("testttttttttttttt",postId)
+    fetch("./api/delete_post.php", {
+     method: "POST",
+     headers: { "Content-Type": "application/json" },
+     body: JSON.stringify({"id" : postId})
+     })
+     .then(response => response.json())
+     .then(data => {
+          console.log(data)
+          if (data.success) {
+          alert("Post deteted successfully!");
+          posts = posts.filter(post => post.id != postId)
+          console.log(posts)
+          displayPosts();
+          } else {
+          alert("Failed to delete post!");
+          }
+     })
+     .catch(error => console.error("Fetch error:", error));
+     }
 
 displayPosts(); // Show posts on page load

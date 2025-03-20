@@ -60,7 +60,6 @@
                     </div>
                </div>
 
-
                <div id="post-list"></div>
                <script src="./assets/js/script.js"></script>
           </div>
