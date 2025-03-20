@@ -23,7 +23,9 @@
           <link rel="stylesheet" href="./assets/css/main.css">
 
           <script>
-               let posts = <?php echo json_encode($posts); ?>; // Convert PHP array to JavaScript
+               // Convert PHP array to JavaScript and reversing it 
+               let posts = <?php echo json_encode($posts); ?>;
+               posts.reverse();
           </script>
      </head>
      <body>
@@ -61,6 +63,7 @@
                </div>
 
                <div id="post-list"></div>
+               <script src="./assets/js/ui.js"></script> <!-- javascript show and hide add and edit forms -->
                <script src="./assets/js/script.js"></script>
           </div>
      </body>

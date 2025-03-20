@@ -1,18 +1,4 @@
-function showAddPostForm() {
-     document.getElementById("add-post-form").style.display = "block";
-}
 
-function hideAddPostForm() {
-     document.getElementById("add-post-form").style.display = "none";
-}
-
-function showSearchForm() {
-     document.getElementById("search-form").style.display = "block";
-}
-
-function hideSearchForm() {
-     document.getElementById("search-form").style.display = "none";
-}
 
 function displayPosts(id) {
      if(!id){
@@ -22,41 +8,48 @@ function displayPosts(id) {
           posts.forEach(post => {
                let postDiv = document.createElement("div");
                postDiv.classList.add("post-card"); 
+               postDiv.id = `post-${post.id}`; 
                postDiv.innerHTML = `
                <h3>${post.title}</h3>
                <p>${post.content}</p>
                <small><strong>ID:</strong> ${post.id} | <strong>Created At:</strong> ${post.created_at}</small>
                <hr>
                <br>
-               <button class="edit-btn">Edit</button>
+               <button class="edit-btn" onclick="editPost(${post.id})">Edit</button>
                <button onclick = "deletePost(${post.id})">Delete</button>
                <hr>`;          
                postList.appendChild(postDiv);
           });  
      }else{
+          //to handle the search 
           console.log(id)
           let postList = document.getElementById("post-list");
-          postList.innerHTML = ""; 
           post = posts.filter(post => post.id == id)
-          console.log(post)
-          post = post[0]
-          if(post){
-               let postDiv = document.createElement("div");
-               postDiv.classList.add("post-card"); 
-               postDiv.innerHTML = `
-               <h3>${post.title}</h3>
-               <p>${post.content}</p>
-               <small><strong>ID:</strong> ${post.id} | <strong>Created At:</strong> ${post.created_at}</small>
-               <hr>
-               <br>
-               <button class="edit-btn" >Edit</button>
-               <button class="delete-btn" >Delete</button>
-               <hr>`;          
-               postList.appendChild(postDiv);
+          if(post.length > 0){
+               postList.innerHTML = ""; 
+               console.log(post)
+               post = post[0]
+               if(post){
+                    let postDiv = document.createElement("div");
+                    postDiv.classList.add("post-card"); 
+                    postDiv.id = `post-${post.id}`; 
+                    postDiv.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                    <small><strong>ID:</strong> ${post.id} | <strong>Created At:</strong> ${post.created_at}</small>
+                    <hr>
+                    <br>
+                    <button class="edit-btn" onclick="editPost(${post.id})">Edit</button>
+                    <button onClick = "deletePost(${post.id})">Delete</button>
+                    <hr>`;          
+                    postList.appendChild(postDiv);
+          }
+         
           }else{
                window.alert(`No post found with ID ,${id}`)
           }
           
+          hideSearchForm()
      }
      
 }
@@ -85,10 +78,8 @@ function addPost() {
      .then(data => {
           console.log(data)
           if (data.success) {
-          alert("Post added successfully!");
-
           // Add new post directly to array (avoid extra DB call)
-          posts.push({id:data.id, title: title, content: content,created_at : data.created_at });
+          posts.splice(0,0,{id:data.id, title: title, content: content,created_at : data.created_at });
           console.log(posts)
 
           // Refresh UI
@@ -100,7 +91,6 @@ function addPost() {
      })
      .catch(error => console.error("Fetch error:", error));
 }
-
 
 function deletePost(postId) {
      // Send the id to PHP 
@@ -125,4 +115,50 @@ function deletePost(postId) {
      .catch(error => console.error("Fetch error:", error));
      }
 
+     function editPost(postId) { 
+         console.log("testttttttttttttt",postId)
+     
+         let postDiv = document.getElementById(`post-${postId}`);
+          let post = posts.find(p => p.id == postId);
+          console.log("testttttttttttttt",postDiv)
+          postDiv.innerHTML = `
+               <input type="text" id="edit-title-${postId}" value="${post.title}">
+               <textarea id="edit-content-${postId}">${post.content}</textarea>
+               <br>
+               <button onclick="savePost(${postId})">Save</button>
+               <button onclick="displayPosts()">Cancel</button>
+          `;
+     }
+     function savePost(postId) {
+          let title = document.getElementById(`edit-title-${postId}`).value;
+          let content = document.getElementById(`edit-content-${postId}`).value;
+          console.log(title,content)
+          let newPost = {
+               id: postId,
+               title: title,
+               content: content
+          };
+          fetch("./api/edit_post.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(newPost)
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+               console.log("3ashhhhhhhhhhh",posts)
+                  // Update local posts array
+                  posts = posts.map(post => {
+                    if(post.id == postId){
+                         return { ...post, title, content };
+                    }return post
+                  })
+                  console.log(posts)
+                  displayPosts(); 
+              } else {
+                  alert("Error: " + data.message);
+              }
+          })
+          .catch(error => console.error("Error editing post:", error));
+      }
 displayPosts(); // Show posts on page load
