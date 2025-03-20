@@ -45,23 +45,16 @@ Before installing amasiBlog, ensure you have the following:
 git clone https://github.com/mohamedkamalll/amasiBlog.git
 cd amasiBlog
 ```
-## File Structure
-amasiBlog/
-│-- api/
-│   ├── add_post.php
-│   ├── delete_post.php
-│   ├── edit_post.php
-│   ├── fetch_posts.php
-│-- assets/
-│   ├── css/
-│   │   ├── styles.css
-│   ├── js/
-│   │   ├── scripts.js
-│   │   ├── ui.js           # Handles view and hide functions for add and search forms
-│   │   ├── api.js          # Handles API requests and responses
-│-- config/
-│   ├── config.php
-│   ├── createDatabase.php
-│   ├── db_setup.php
-│-- index.php
-│-- README.md
+Each directory and file serves a specific purpose:
+
+- **`api/`**: Backend API scripts for CRUD operations.
+- **`assets/css/styles.css`**: Stylesheet for UI design.
+- **`assets/js/`**:
+  - `ui.js`: Manages view and hide functions for add and search forms.
+  - `api.js`: Handles API calls and responses.
+- **`config/`**:
+  - `config.php`: Database configuration settings.
+  - `createDatabase.php`: Creates the database if it doesn’t exist.
+  - `db_setup.php`: Sets up required tables.
+- **`index.php`**: Main entry point of the blog.
+- **`README.md`**: Project documentation.
