@@ -14,9 +14,13 @@
      EOT;
 
     if ($conn->multi_query($sql) === TRUE) {
-        echo "table added successfully.";
+        $message = "table added successfully.";
+        header("X-Debug-Message: $message");
     } else {
-        echo "Error adding tables " . $conn->error;
+        $message = "Error adding tables " . $conn->error;
+        header("X-Debug-Message: $message");
     }
+    $conn->close();
+    $conn = new mysqli($host, $user, $password, $database);  // Reconnect the database to ensure when selecting posts it willnt show an error cause its not updated yet
 
 ?>

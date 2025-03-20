@@ -50,8 +50,33 @@ body {
  
  .nav a:hover {
      background: #777;
+}
+
+/* add post form*/
+ #add-post-form {
+     display: none;
+     margin-top: 20px;
+     padding: 15px;
+     border: 1px solid #ccc;
+     background: #f9f9f9;
+     width: 300px;
  }
 
+
+ /* Search form */
+ #search-form {
+     display: none;
+     margin-top: 20px;
+     padding: 15px;
+     border: 1px solid #ccc;
+     background: #f9f9f9;
+     width: 300px;
+ }
+
+ .centered-buttons {
+     text-align: center;
+     margin-top: 20px;
+ }
 
 
 
@@ -77,3 +102,4 @@ body {
  .post-card small {
      color: #999;
  }
+
